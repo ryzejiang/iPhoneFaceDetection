@@ -10,11 +10,11 @@ In iOS11, Apple introduces [CoreML](https://developer.apple.com/documentation/co
 
 Try it out with real time face detection on your iPhone! 📱
 
-<img src="https://github.com/Weijay/AppleFaceDetection/blob/master/resources/VNDetectFaceRectanglesRequest.png" width="250" height="400"/> <img src="https://github.com/Weijay/AppleFaceDetection/blob/master/resources/VNDetectFaceLandmarksRequest.png" width="250" height="400"/>  <img src="https://github.com/Weijay/AppleFaceDetection/blob/master/resources/faceRecognition.gif" />
+<!-- <img src="https://github.com/Weijay/AppleFaceDetection/blob/master/resources/VNDetectFaceRectanglesRequest.png" width="250" height="400"/> <img src="https://github.com/Weijay/AppleFaceDetection/blob/master/resources/VNDetectFaceLandmarksRequest.png" width="250" height="400"/>  <img src="https://github.com/Weijay/AppleFaceDetection/blob/master/resources/faceRecognition.gif" /> -->
 
 You can find out the differences between `CIDetector` and `Vison Framework` down below.
 
-[Moving From Voila-Jones to Deep Learning](https://machinelearning.apple.com/2017/11/16/face-detection.html)
+<!-- [Moving From Voila-Jones to Deep Learning](https://machinelearning.apple.com/2017/11/16/face-detection.html) -->
 
 
 ---
@@ -29,12 +29,12 @@ private var requests = [VNRequest]() // you can do mutiple requests at the same 
 var faceDetectionRequest: VNRequest!
 @IBAction func UpdateDetectionType(_ sender: UISegmentedControl) {
     // use segmentedControl to switch over VNRequest
-    faceDetectionRequest = sender.selectedSegmentIndex == 0 ? VNDetectFaceRectanglesRequest(completionHandler: handleFaces) : VNDetectFaceLandmarksRequest(completionHandler: handleFaceLandmarks) 
+    faceDetectionRequest = sender.selectedSegmentIndex == 0 ? VNDetectFaceRectanglesRequest(completionHandler: handleFaces) : VNDetectFaceLandmarksRequest(completionHandler: handleFaceLandmarks)
 }
 
 ```
 
-Perform the requests every single frame. The image comes from camera via `captureOutput(_:didOutput:from:)`, see [AVCaptureVideoDataOutputSampleBufferDelegate](https://developer.apple.com/documentation/avfoundation/avcapturevideodataoutputsamplebufferdelegate/1385775-captureoutput) 
+Perform the requests every single frame. The image comes from camera via `captureOutput(_:didOutput:from:)`, see [AVCaptureVideoDataOutputSampleBufferDelegate](https://developer.apple.com/documentation/avfoundation/avcapturevideodataoutputsamplebufferdelegate/1385775-captureoutput)
 
 ```swift
 func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
@@ -45,7 +45,7 @@ func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBu
     if let cameraIntrinsicData = CMGetAttachment(sampleBuffer, kCMSampleBufferAttachmentKey_CameraIntrinsicMatrix, nil) {
       requestOptions = [.cameraIntrinsics : cameraIntrinsicData]
     }
-    
+
     // perform image request for face recognition
     let imageRequestHandler = VNImageRequestHandler(cvPixelBuffer: pixelBuffer, orientation: exifOrientation, options: requestOptions)
 
@@ -60,7 +60,7 @@ func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBu
 }
 ```
 
-Handle the return of your request, `VNRequestCompletionHandler`.  
+Handle the return of your request, `VNRequestCompletionHandler`.
 - `handleFaces` for `VNDetectFaceRectanglesRequest`
 - `handleFaceLandmarks` for `VNDetectFaceLandmarksRequest`
 
@@ -79,7 +79,7 @@ func handleFaces(request: VNRequest, error: Error?) {
         }
     }
 }
-    
+
 func handleFaceLandmarks(request: VNRequest, error: Error?) {
     DispatchQueue.main.async {
         //perform all the UI updates on the main queue
